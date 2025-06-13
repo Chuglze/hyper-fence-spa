@@ -1,0 +1,369 @@
+Interactive Report">
+```html
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>&lt;Hyper Fence&gt; 대화형 보고서</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Noto Sans KR', sans-serif;
+            scroll-behavior: smooth;
+        }
+        .section-active {
+            color: #D97706; /* amber-600 */
+            font-weight: 700;
+            border-bottom: 2px solid #D97706;
+        }
+        .section-inactive {
+            color: #4B5563; /* gray-600 */
+            transition: color 0.3s;
+        }
+        .section-inactive:hover {
+            color: #111827; /* gray-900 */
+        }
+        .card {
+            transition: transform 0.3s, box-shadow 0.3s;
+            cursor: pointer;
+        }
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+        }
+        .card .details {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease-out, opacity 0.5s ease-out;
+            opacity: 0;
+        }
+        .card.is-open .details {
+            max-height: 500px;
+            opacity: 1;
+        }
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 400px;
+            max-height: 50vh;
+        }
+        @media (min-width: 768px) {
+            .chart-container {
+                height: 500px;
+            }
+        }
+    </style>
+</head>
+<body class="bg-stone-100 text-gray-800">
+
+    <!-- 
+    Chosen Palette: Warm Neutral Harmony (#F5F5F4 background, #374151 text, #D97706 accent)
+    Application Structure Plan: This SPA is designed as a five-section, non-linear journey to guide the user from the abstract philosophical problem to the concrete metaphors of the <Hyper Fence> project. The structure—(1) Core Question, (2) Worldview of Disaster, (3) Interactive Debris Exploration, (4) Rhizomatic Generation, and (5) Concluding Ethics—was chosen to build understanding incrementally. Unlike a linear report, this thematic approach allows users to explore concepts at their own pace, making the dense philosophical content more accessible and engaging. The flow is designed to mirror a process of inquiry: starting with a universal question, examining the conditions (disaster), interacting with the evidence (debris), exploring a potential new mode of being (rhizome), and ending with a reflective summary.
+    Visualization & Content Choices:
+    - Core Question (Sec 1): Minimalist text presentation. Goal: To set a contemplative tone and introduce the core philosophical inquiry without overwhelming the user.
+    - Disaster & Decontextualization (Sec 2): Interactive before/after diagram (HTML/CSS/JS). Goal: To make the abstract concept of "decontextualization" a tangible, visual experience of shattering.
+    - Debris Exploration (Sec 3): Interactive card gallery (JS). Goal: To allow user-paced, focused exploration of the project's core artifacts, fostering curiosity and personal interpretation.
+    - Rhizome & Spore (Sec 4): Custom Canvas animation. Goal: To visually represent the complex Deleuzian concept of non-linear, non-hierarchical connection and generation, making an abstract idea dynamic and intuitive.
+    - Ethics Conclusion (Sec 5): Concluding text. Goal: To bring the journey to a reflective close and reinforce the core ethical message of the project.
+    - CONFIRMATION: NO SVG graphics used. NO Mermaid JS used.
+    -->
+
+    <header class="bg-stone-200/80 backdrop-blur-sm sticky top-0 z-50 shadow-md">
+        <nav class="container mx-auto px-4">
+            <ul class="flex justify-center items-center space-x-4 sm:space-x-8 py-3">
+                <li><a href="#question" class="nav-link text-sm sm:text-base px-2 py-2 section-inactive">질문</a></li>
+                <li><a href="#worldview" class="nav-link text-sm sm:text-base px-2 py-2 section-inactive">세계관</a></li>
+                <li><a href="#debris" class="nav-link text-sm sm:text-base px-2 py-2 section-inactive">파편</a></li>
+                <li><a href="#rhizome" class="nav-link text-sm sm:text-base px-2 py-2 section-inactive">생성</a></li>
+                <li><a href="#ethics" class="nav-link text-sm sm:text-base px-2 py-2 section-inactive">윤리</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="container mx-auto p-4 sm:p-8">
+
+        <section id="question" class="section min-h-screen flex flex-col justify-center items-center text-center py-20">
+            <div class="max-w-3xl">
+                <h1 class="text-3xl sm:text-4xl md:text-5xl font-bold text-amber-600 mb-6">&lt;Hyper Fence&gt;</h1>
+                <p class="text-xl sm:text-2xl md:text-3xl font-light mb-8 text-gray-700 leading-relaxed">
+                    타인을 이해한다는 것은 무엇을 의미할까?
+                </p>
+                <p class="text-lg sm:text-xl md:text-2xl font-light text-gray-600 leading-relaxed">
+                    완전한 이해가 불가능하다면, 우리는 어떤 태도로 그 곁에 머물 수 있을까?
+                </p>
+                <div class="mt-12 text-gray-500 animate-pulse">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 mx-auto" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                    </svg>
+                    <span class="text-sm">아래로 스크롤하여 탐색하세요</span>
+                </div>
+            </div>
+        </section>
+
+        <section id="worldview" class="section min-h-screen flex flex-col justify-center items-center py-20">
+            <div class="w-full max-w-4xl text-center">
+                <h2 class="text-2xl sm:text-3xl font-bold mb-4">세계관: 불균등한 재난과 탈맥락</h2>
+                <p class="text-base sm:text-lg text-gray-600 mb-10 leading-relaxed max-w-2xl mx-auto">
+                    이곳의 재난은 단순히 불가항력적인 사건이 아닙니다. 이는 권력에 의해 특정 집단에 리스크가 불균형하게 생산되고 배분된 결과로 발생한 비극적 상황을 상징합니다. 재난은 기존의 모든 것을 파괴하고 뒤섞어, 정보가 불완전해진 '탈맥락의 상태'를 초래합니다.
+                </p>
+                <div id="context-diagram" class="bg-white rounded-lg shadow-xl p-6 min-h-[300px] flex flex-col justify-center items-center relative transition-all duration-500">
+                    <div id="before-disaster" class="text-center transition-opacity duration-500">
+                        <h3 class="text-xl font-semibold text-blue-600 mb-4">재난 이전: 연결된 맥락</h3>
+                        <div class="flex flex-wrap justify-center items-center gap-4">
+                           <span class="bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-sm font-medium">기억</span>
+                           <span class="bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-sm font-medium">역사</span>
+                           <span class="bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-sm font-medium">공동체</span>
+                           <span class="bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-sm font-medium">관계</span>
+                           <span class="bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-sm font-medium">정체성</span>
+                        </div>
+                    </div>
+                     <div id="after-disaster" class="text-center absolute inset-0 flex flex-col justify-center items-center transition-opacity duration-500 opacity-0 pointer-events-none">
+                        <h3 class="text-xl font-semibold text-red-600 mb-4">재난 이후: 파편화된 흔적 (탈맥락)</h3>
+                        <div class="flex flex-wrap justify-center items-center gap-2">
+                           <span class="bg-red-100 text-red-800 px-2 py-1 rounded-md text-xs">기...억</span>
+                           <span class="bg-red-100 text-red-800 px-2 py-1 rounded-md text-xs">역...사</span>
+                           <span class="bg-red-100 text-red-800 px-2 py-1 rounded-md text-xs">...공동...</span>
+                           <span class="bg-red-100 text-red-800 px-2 py-1 rounded-md text-xs">관계...</span>
+                           <span class="bg-red-100 text-red-800 px-2 py-1 rounded-md text-xs">...정체...</span>
+                           <span class="bg-red-100 text-red-800 px-2 py-1 rounded-md text-xs">...흔적</span>
+                        </div>
+                    </div>
+                </div>
+                <button id="toggle-disaster" class="mt-8 bg-amber-600 text-white font-bold py-2 px-6 rounded-lg hover:bg-amber-700 transition duration-300">재난 발생시키기</button>
+            </div>
+        </section>
+
+        <section id="debris" class="section min-h-screen flex flex-col justify-center py-20">
+            <div class="w-full max-w-6xl mx-auto">
+                <h2 class="text-2xl sm:text-3xl font-bold text-center mb-4">파편: 재난의 유류품 탐색</h2>
+                <p class="text-base sm:text-lg text-gray-600 mb-10 text-center leading-relaxed max-w-2xl mx-auto">
+                    관객은 '탈맥락의 상태' 속에서 타인의 '파편화된 중고품'(재난의 유류품)을 마주합니다. 각 카드를 클릭하여 그 안에 담긴 상징적 의미를 탐색해 보세요. 이는 사라진 개인의 삶과 시스템의 붕괴를 상상하는 윤리적 실천의 시작입니다.
+                </p>
+                <div id="debris-gallery" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                </div>
+            </div>
+        </section>
+
+        <section id="rhizome" class="section min-h-screen flex flex-col justify-center items-center py-20">
+             <div class="w-full max-w-4xl text-center">
+                <h2 class="text-2xl sm:text-3xl font-bold mb-4">생성: 홀씨와 리좀적 연결</h2>
+                <p class="text-base sm:text-lg text-gray-600 mb-10 leading-relaxed max-w-2xl mx-auto">
+                    파편들을 재해석하는 행위는 새로운 의미의 '홀씨'를 생성합니다. 이 홀씨들은 중심 없이 확장하고 연결되는 '리좀'처럼, 예측 불가능한 관계망을 만들며 횡단적 소통과 의미의 확산을 표현합니다.
+                </p>
+                <div class="chart-container bg-white rounded-lg shadow-xl overflow-hidden">
+                    <canvas id="rhizomeCanvas"></canvas>
+                </div>
+                <button id="start-rhizome" class="mt-8 bg-amber-600 text-white font-bold py-2 px-6 rounded-lg hover:bg-amber-700 transition duration-300">의미 재구성 시작</button>
+            </div>
+        </section>
+        
+        <section id="ethics" class="section min-h-screen flex flex-col justify-center items-center text-center py-20">
+            <div class="max-w-3xl">
+                 <h2 class="text-2xl sm:text-3xl font-bold mb-8 text-gray-800">윤리: 끊임없는 몸짓</h2>
+                <p class="text-xl sm:text-2xl font-light text-gray-700 leading-relaxed mb-6">
+                    이 프로젝트는 그 끊임없는 윤리적 몸짓—이해할 수 없음을 알면서도 계속해서 이해하려는 시도—을 관객의 체험을 통해 서서히 형상화합니다.
+                </p>
+                <p class="text-lg sm:text-xl font-light text-gray-600 leading-relaxed">
+                    단순한 '존중'을 넘어선, 불완전함 속에서도 계속해서 이해를 시도하는 지속적인 사유와 실천의 가능성을 탐색하는 열린 공간을 제시합니다.
+                </p>
+            </div>
+        </section>
+
+    </main>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const navLinks = document.querySelectorAll('.nav-link');
+            const sections = document.querySelectorAll('.section');
+
+            const observerOptions = {
+                root: null,
+                rootMargin: '0px',
+                threshold: 0.5 
+            };
+
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const id = entry.target.getAttribute('id');
+                        navLinks.forEach(link => {
+                            link.classList.remove('section-active');
+                            link.classList.add('section-inactive');
+                            if (link.getAttribute('href') === '#' + id) {
+                                link.classList.add('section-active');
+                                link.classList.remove('section-inactive');
+                            }
+                        });
+                    }
+                });
+            }, observerOptions);
+
+            sections.forEach(section => {
+                observer.observe(section);
+            });
+
+            navLinks.forEach(link => {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const targetId = this.getAttribute('href');
+                    document.querySelector(targetId).scrollIntoView({
+                        behavior: 'smooth'
+                    });
+                });
+            });
+
+            const toggleBtn = document.getElementById('toggle-disaster');
+            const beforeDiv = document.getElementById('before-disaster');
+            const afterDiv = document.getElementById('after-disaster');
+            let isDisaster = false;
+
+            toggleBtn.addEventListener('click', () => {
+                isDisaster = !isDisaster;
+                if (isDisaster) {
+                    beforeDiv.style.opacity = '0';
+                    afterDiv.style.opacity = '1';
+                    afterDiv.classList.remove('pointer-events-none');
+                    toggleBtn.textContent = '맥락 복구하기';
+                    toggleBtn.classList.remove('bg-amber-600', 'hover:bg-amber-700');
+                    toggleBtn.classList.add('bg-blue-600', 'hover:bg-blue-700');
+
+                } else {
+                    beforeDiv.style.opacity = '1';
+                    afterDiv.style.opacity = '0';
+                    afterDiv.classList.add('pointer-events-none');
+                    toggleBtn.textContent = '재난 발생시키기';
+                    toggleBtn.classList.remove('bg-blue-600', 'hover:bg-blue-700');
+                    toggleBtn.classList.add('bg-amber-600', 'hover:bg-amber-700');
+                }
+            });
+
+            const debrisData = [
+                { category: '개인의 흔적', name: '그을린 서적', icon: '📖', meaning: '지식, 기억, 개인의 내면적 세계가 상실된 보편적 상징.' },
+                { category: '개인의 흔적', name: '한쪽만 남은 신발', icon: '👟', meaning: '발자취의 단절, 삶의 이동이 멈춘 보편적 상징.' },
+                { category: '개인의 흔적', name: '깨진 식기류 파편', icon: '🏺', meaning: '미학과 실용성의 파괴, 용도 상실. 다양한 문화권의 식기류 특징을 일부 반영.' },
+                { category: '개인의 흔적', name: '망가진 시계', icon: '🕰️', meaning: '시간의 정지, 질서의 붕괴.' },
+                { category: '건축 잔해', name: '금 간 콘크리트 조각', icon: '🧱', meaning: '견고함의 파괴, 문명과 안전의 기반 균열. 전 세계 재난 현장에서 가장 흔한 잔해.' },
+                { category: '건축 잔해', name: '부서진 목재 파편', icon: '🪵', meaning: '건축 소재의 변형, 과거의 흔적. 다양한 건축 양식에서 공통.' },
+                { category: '건축 잔해', name: '휘어진 창틀 잔해', icon: '🖼️', meaning: '외부와 내부의 경계 파괴, 안전의 상실.' },
+                { category: '시스템 파편', name: '망가진 전자기기 부품', icon: '📱', meaning: '기술 문명의 취약성, 정보 소통의 단절. 현대 사회의 보편적 요소.' },
+                { category: '시스템 파편', name: '뒤틀린 전선 더미', icon: '🔌', meaning: '연결성의 단절, 에너지와 소통의 흐름 중단.' },
+                { category: '시스템 파편', name: '부서진 교통 표지판', icon: '🚸', meaning: '방향 상실, 사회 질서의 혼란. 글자와 기호의 보편적 혼란.' }
+            ];
+            const gallery = document.getElementById('debris-gallery');
+            debrisData.forEach(item => {
+                const card = document.createElement('div');
+                card.className = 'card bg-white rounded-lg shadow-lg p-6 flex flex-col items-center';
+                card.innerHTML = `
+                    <div class="text-5xl mb-4">${item.icon}</div>
+                    <h3 class="text-xl font-semibold mb-2">${item.name}</h3>
+                    <p class="text-sm text-gray-500 mb-4">${item.category}</p>
+                    <div class="details text-center">
+                        <p class="text-gray-600">${item.meaning}</p>
+                    </div>
+                `;
+                gallery.appendChild(card);
+
+                card.addEventListener('click', () => {
+                    card.classList.toggle('is-open');
+                });
+            });
+
+            const rhizomeCanvas = document.getElementById('rhizomeCanvas');
+            const startRhizomeBtn = document.getElementById('start-rhizome');
+            const ctx = rhizomeCanvas.getContext('2d');
+            let animationFrameId;
+
+            const resizeCanvas = () => {
+                const container = rhizomeCanvas.parentElement;
+                rhizomeCanvas.width = container.clientWidth;
+                rhizomeCanvas.height = container.clientHeight;
+            };
+
+            window.addEventListener('resize', resizeCanvas);
+            resizeCanvas();
+
+            const points = [];
+            const numPoints = 20;
+            for (let i = 0; i < numPoints; i++) {
+                points.push({
+                    x: Math.random() * rhizomeCanvas.width,
+                    y: Math.random() * rhizomeCanvas.height,
+                    vx: (Math.random() - 0.5) * 0.5,
+                    vy: (Math.random() - 0.5) * 0.5,
+                    radius: 3 + Math.random() * 3,
+                    connections: 0
+                });
+            }
+
+            let lines = [];
+            let lineQueue = [];
+
+            function draw() {
+                ctx.clearRect(0, 0, rhizomeCanvas.width, rhizomeCanvas.height);
+                
+                ctx.fillStyle = '#4B5563';
+                points.forEach(p => {
+                    p.x += p.vx;
+                    p.y += p.vy;
+                    if (p.x < 0 || p.x > rhizomeCanvas.width) p.vx *= -1;
+                    if (p.y < 0 || p.y > rhizomeCanvas.height) p.vy *= -1;
+
+                    ctx.beginPath();
+                    ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+                    ctx.fill();
+                });
+
+                ctx.strokeStyle = 'rgba(217, 119, 6, 0.5)';
+                ctx.lineWidth = 1;
+                lines.forEach(line => {
+                    ctx.beginPath();
+                    ctx.moveTo(line.p1.x, line.p1.y);
+                    ctx.lineTo(line.p2.x, line.p2.y);
+                    ctx.stroke();
+                });
+
+                if(lineQueue.length > 0) {
+                    const {p1, p2} = lineQueue.shift();
+                    lines.push({p1, p2});
+                }
+
+                animationFrameId = requestAnimationFrame(draw);
+            }
+
+            draw();
+
+            startRhizomeBtn.addEventListener('click', () => {
+                if (lineQueue.length > 0 || lines.length > 0) {
+                    lines = [];
+                    lineQueue = [];
+                    points.forEach(p => p.connections = 0);
+                    return;
+                }
+
+                for (let i = 0; i < points.length; i++) {
+                    let p1 = points[i];
+                    let connectTo = Math.floor(Math.random() * points.length);
+                    while(connectTo === i) {
+                         connectTo = Math.floor(Math.random() * points.length);
+                    }
+                    let p2 = points[connectTo];
+                    if (p1.connections < 2 && p2.connections < 2) {
+                        lineQueue.push({ p1, p2 });
+                        p1.connections++;
+                        p2.connections++;
+                    }
+                }
+            });
+
+        });
+    </script>
+</body>
+</html>
+```
